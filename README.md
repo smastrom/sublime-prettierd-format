@@ -1,4 +1,4 @@
-# prettierd_format
+# Prettierd Format
 
 Sublime Text plugin to finally format files fast using [prettierd](https://github.com/fsouza/prettierd).
 
@@ -12,7 +12,11 @@ Sublime Text plugin to finally format files fast using [prettierd](https://githu
 npm i -g prettierd
 ```
 
-2. Install this plugin via [Package Control](https://packagecontrol.io/packages/Prettierd%20Formatter) or manually.
+2. Install this plugin using [Package Control](https://packagecontrol.io/packages/Prettierd%20Formatter):
+
+`Package Control: Install Package` → `Prettierd Format`
+
+3. Restart Sublime Text
 
 <br />
 
@@ -38,7 +42,7 @@ Enable/disable formatting on save:
 "format_on_save": true
 ```
 
-Add additional file types to be formatted either on save or via command palette:
+Add additional file types (added via plugins) to be formatted either on save or via command palette:
 
 ```json
 "additional_extensions": ["php"]
@@ -62,7 +66,7 @@ Exclude directories from being formatted on save:
 
 This plugin does nothing else than piping the input to `prettierd` and replacing the file contents with the output.
 
-It is basically the equivalent of running `cat file.js | prettierd file.js` with the command line.
+It is basically just like executing `cat file.js | prettierd file.js` with the command line.
 
 For this reason, any issue with plugins or additional prettier configuration should be reported to the [prettierd](https://github.com/fsouza/prettierd) as it is the one doing the actual formatting.
 
@@ -70,7 +74,7 @@ For this reason, any issue with plugins or additional prettier configuration sho
 
 As of September 2023, there are some upstream issues with Astro and Svelte files.
 
-However, you can format them using `LSP: format` after installing the relevant language server.
+However, you can format them using `LSP: format` after installing the relevant language server which seems to respect the `.prettierrc` file.
 
 <br />
 
