@@ -2,10 +2,10 @@ import sublime
 import sublime_plugin
 
 from .prettierd_formatter import format_with_prettierd
-from .constants import valid_extensions
+from .extensions import valid_extensions
 
 def get_settings():
-    return sublime.load_settings("PrettierdFormat.sublime-settings")
+    return sublime.load_settings("prettierd_format.sublime-settings")
 
 class PrettierdFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit):
