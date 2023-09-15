@@ -5,7 +5,7 @@ import os
 import re
 
 from .prettierd_formatter import format_with_prettierd
-from .extensions import valid_extensions
+from .prettierd_extensions import valid_extensions
 
 def get_settings():
     return sublime.load_settings("prettierd_format.sublime-settings")
@@ -32,6 +32,7 @@ class PrettierdFormatEventListener(sublime_plugin.EventListener):
 
         disabled_extensions_on_save = settings.get("disabled_extensions_on_save", [])
         disabled_directories_on_save = settings.get("disabled_directories_on_save", [])
+        
         additional_extensions = settings.get("additional_extensions", [])
 
         if file_extension in disabled_extensions_on_save:
@@ -52,7 +53,8 @@ class PrettierdFormatEventListener(sublime_plugin.EventListener):
         all_extensions = valid_extensions + additional_extensions
 
         if file_extension in all_extensions:
-            formatted_code = format_with_prettierd(file_path)
+            current_content = view.substr(sublime.Region(0, view.size()))
+            formatted_code = format_with_prettierd(current_content, file_path)
             if formatted_code:
                 view.run_command('replace_view_content', {'content': formatted_code})
 

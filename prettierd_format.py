@@ -2,7 +2,7 @@ import sublime
 import sublime_plugin
 
 from .prettierd_formatter import format_with_prettierd
-from .extensions import valid_extensions
+from .prettierd_extensions import valid_extensions
 
 def get_settings():
     return sublime.load_settings("prettierd_format.sublime-settings")
@@ -25,7 +25,14 @@ class PrettierdFormatCommand(sublime_plugin.TextCommand):
             return       
 
         # If everything is okay, format the file
-        formatted_code = format_with_prettierd(file_path)
+        print("Formatting file:", file_path)
+
+        current_content = self.view.substr(sublime.Region(0, self.view.size()))
+        file_path = self.view.file_name()
+        formatted_code = format_with_prettierd(current_content, file_path)
+        
+        # print("Formatted Code:", formatted_code)
+
         if formatted_code:
             self.view.run_command('replace_view_content', {'content': formatted_code})
 
