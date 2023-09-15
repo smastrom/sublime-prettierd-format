@@ -2,16 +2,23 @@ import subprocess
 import sublime
 import sublime_plugin
 import os
+import re
 
 from .prettierd_formatter import format_with_prettierd
 from .constants import valid_extensions
 
 def get_settings():
-    return sublime.load_settings("PrettierdFormat.sublime-settings")
+    return sublime.load_settings("prettierd_format.sublime-settings")
 
 class PrettierdFormatEventListener(sublime_plugin.EventListener):
 
     def on_pre_save(self, view):
+        settings = get_settings()
+        format_on_save = settings.get("format_on_save", True)
+
+        if not format_on_save:
+            return
+
         # If skip_formatting is set on the view, reset it and exit early.
         if view.settings().get("skip_formatting", False):
             view.settings().erase("skip_formatting")
@@ -22,8 +29,6 @@ class PrettierdFormatEventListener(sublime_plugin.EventListener):
             return
 
         file_extension = file_path.split('.')[-1].lower()
-
-        settings = get_settings()
 
         disabled_extensions_on_save = settings.get("disabled_extensions_on_save", [])
         disabled_directories_on_save = settings.get("disabled_directories_on_save", [])
@@ -37,8 +42,10 @@ class PrettierdFormatEventListener(sublime_plugin.EventListener):
         disabled_directories_on_save.append(plugin_dir)
 
         # Check if the file belongs to a disabled directory
-        for directory in disabled_directories_on_save:
-            if directory in file_path:
+        for directory_pattern in disabled_directories_on_save:
+            # Convert wildcard pattern to regex pattern
+            regex_pattern = re.escape(directory_pattern).replace("\\*", ".*")
+            if re.search(regex_pattern, file_path):
                 return
 
         # Check against all extensions
