@@ -1,6 +1,6 @@
-# prettierd format
+# prettierd_format
 
-Plugin for [Sublime Text](https://www.sublimetext.com/) to format files faster using [prettierd](https://github.com/fsouza/prettierd).
+Sublime Text plugin to finally format files fast using [prettierd](https://github.com/fsouza/prettierd).
 
 <br />
 
@@ -18,13 +18,13 @@ npm i -g prettierd
 
 ## Usage
 
-By default it formats any file natively supported by [Prettier](https://prettier.io/docs/en/) on save.
+By default it formats on save any file natively supported by [Prettier](https://prettier.io/docs/en/).
 
 ### Commands
 
 To format a file via command palette:
 
-- `Prettierd: Format this file`
+- `Prettierd: Format`
 
 To save a file without formatting:
 
@@ -38,34 +38,42 @@ Enable/disable formatting on save:
 "format_on_save": true
 ```
 
-Exclude specific extensions from being formatted on save:
-
-```json
-"disabled_extensions": ["md"]
-```
-
-Exclude specific directories from being formatted on save:
-
-```json
-"disabled_directories": ["node_modules"]
-```
-
-Add additional file types to be formatted on save (enabled via plugins):
+Add additional file types to be formatted either on save or via command palette:
 
 ```json
 "additional_extensions": ["php"]
+```
+
+Exclude extensions from being formatted on save:
+
+```json
+"disabled_extensions_on_save": ["md"]
+```
+
+Exclude directories from being formatted on save:
+
+```json
+"disabled_directories_on_save": ["*/node_modules/*"]
 ```
 
 <br />
 
 ## Notes
 
-This plugin does nothing else than piping the file contents to `prettierd` and replacing the file contents with the output.
+This plugin does nothing else than piping the input to `prettierd` and replacing the file contents with the output.
 
-It is basically the equivalent of running `cat file.js | prettierd file.s` with the command line.
+It is basically the equivalent of running `cat file.js | prettierd file.js` with the command line.
 
 For this reason, any issue with plugins or additional prettier configuration should be reported to the [prettierd](https://github.com/fsouza/prettierd) as it is the one doing the actual formatting.
 
 ### Astro / Svelte
 
-For Astro and Svelte files, you should not use this package but simply format using `LSP: format` command.
+As of September 2023, there are some upstream issues with Astro and Svelte files.
+
+However, you can format them using `LSP: format` after installing the relevant language server.
+
+<br />
+
+## License
+
+0BSD

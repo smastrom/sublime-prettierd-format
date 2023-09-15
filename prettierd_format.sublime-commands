@@ -4,7 +4,7 @@
         "command": "prettierd_format"
     },
     {
-        "caption": "Prettierd: Save without format",
+        "caption": "Prettierd: Save without formatting",
         "command": "prettierd_save_without_format"
     },
     {
