@@ -64,11 +64,11 @@ Exclude directories from being formatted on save:
 
 ## Notes
 
-This plugin does nothing else than piping the input to `prettierd` and replacing the file contents with the output.
+This plugin does nothing else than piping the input to `prettierd` and replacing the view contents with the output.
 
 It is basically just like executing `cat file.js | prettierd file.js` with the command line.
 
-For this reason, any issue with prettier plugin or configuration should be investigated on the [prettierd](https://github.com/fsouza/prettierd) repo as it is underlying tool actually interacting with Prettier.
+For this reason, any issue with prettier plugins or configuration should be investigated on the [prettierd](https://github.com/fsouza/prettierd) repo as it is the underlying tool actually interacting with Prettier.
 
 ### Astro / Svelte
 
