@@ -6,5 +6,7 @@
     // What extensions to disable when formatting on save.
     "disabled_extensions_on_save": [],
     // Directories to disable formatting on save.
-    "disabled_directories_on_save": ["*/node_modules/*"]
+    "disabled_directories_on_save": ["*/node_modules/*"],
+    // Path to prettierd binary, optional.
+    "prettierd_path": null,
 }

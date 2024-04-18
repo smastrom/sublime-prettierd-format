@@ -60,6 +60,12 @@ Exclude directories from being formatted on save:
 "disabled_directories_on_save": ["*/node_modules/*"]
 ```
 
+Optional, path to `prettierd` executable. If not specified, it will be searched for in the system:
+
+```json
+"prettierd_path": null
+```
+
 <br />
 
 ## Notes
