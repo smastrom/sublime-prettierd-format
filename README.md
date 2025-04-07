@@ -66,6 +66,20 @@ Optional, path to `prettierd` executable. If not specified, it will be searched 
 "prettierd_path": null
 ```
 
+All these options can be configured globally in your user settings, or per project under the `"PrettierdFormat"` setting:
+
+```json
+{
+    "settings":
+    {
+        "PrettierdFormat":
+        {
+            "format_on_save": true
+        }
+    }
+}
+```
+
 <br />
 
 ## Notes
