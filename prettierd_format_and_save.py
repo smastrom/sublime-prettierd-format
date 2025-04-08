@@ -1,4 +1,3 @@
-import subprocess
 import sublime
 import sublime_plugin
 import os
@@ -6,15 +5,12 @@ import re
 
 from .prettierd_formatter import format_with_prettierd
 from .prettierd_extensions import valid_extensions
-
-def get_settings():
-    return sublime.load_settings("prettierd_format.sublime-settings")
+from .utils import get_setting
 
 class PrettierdFormatEventListener(sublime_plugin.EventListener):
 
     def on_pre_save(self, view):
-        settings = get_settings()
-        format_on_save = settings.get("format_on_save", True)
+        format_on_save = get_setting(view, "format_on_save", True)
 
         if not format_on_save:
             return
@@ -30,10 +26,10 @@ class PrettierdFormatEventListener(sublime_plugin.EventListener):
 
         file_extension = file_path.split('.')[-1].lower()
 
-        disabled_extensions_on_save = settings.get("disabled_extensions_on_save", [])
-        disabled_directories_on_save = settings.get("disabled_directories_on_save", [])
+        disabled_extensions_on_save = get_setting(view, "disabled_extensions_on_save", [])
+        disabled_directories_on_save = get_setting(view, "disabled_directories_on_save", [])
         
-        additional_extensions = settings.get("additional_extensions", [])
+        additional_extensions = get_setting(view, "additional_extensions", [])
 
         if file_extension in disabled_extensions_on_save:
             return
@@ -54,7 +50,7 @@ class PrettierdFormatEventListener(sublime_plugin.EventListener):
 
         if file_extension in all_extensions:
             current_content = view.substr(sublime.Region(0, view.size()))
-            formatted_code = format_with_prettierd(current_content, file_path)
+            formatted_code = format_with_prettierd(view, current_content, file_path)
             if formatted_code:
                 view.run_command('replace_view_content', {'content': formatted_code})
 

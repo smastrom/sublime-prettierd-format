@@ -3,14 +3,14 @@ import shutil
 import subprocess
 import os
 
-def get_prettierd_path():
-    settings = sublime.load_settings("Prettierd.sublime-settings")
-    
-    settings_path = settings.get("prettierd_path", "")
+from .utils import get_setting
+
+def get_prettierd_path(view_or_window):
+    settings_path = get_setting(view_or_window, "prettierd_path", "")
     if settings_path:
         return settings_path
 
-    # Default behavior when not specified
+    # Default behavior when not specified
     default_path = shutil.which("prettierd")
     if default_path:
         return default_path
@@ -18,8 +18,8 @@ def get_prettierd_path():
     sublime.error_message("prettierd executable not found.")
     return None
 
-def format_with_prettierd(content, file_path):
-    prettierd_path = get_prettierd_path()
+def format_with_prettierd(view_or_window, content, file_path):
+    prettierd_path = get_prettierd_path(view_or_window)
     if not prettierd_path:
         message = "prettierd path not found."
         print(message)

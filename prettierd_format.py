@@ -3,9 +3,7 @@ import sublime_plugin
 
 from .prettierd_formatter import format_with_prettierd
 from .prettierd_extensions import valid_extensions
-
-def get_settings():
-    return sublime.load_settings("prettierd_format.sublime-settings")
+from .utils import get_setting
 
 class PrettierdFormatCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -17,8 +15,7 @@ class PrettierdFormatCommand(sublime_plugin.TextCommand):
         file_extension = file_path.split('.')[-1].lower()
 
         # Fetch additional extensions from settings
-        settings = get_settings()
-        additional_extensions = settings.get("additional_extensions", [])
+        additional_extensions = get_setting(self.view, "additional_extensions", [])
         all_extensions = valid_extensions + additional_extensions
 
         if file_extension not in all_extensions:
@@ -29,7 +26,7 @@ class PrettierdFormatCommand(sublime_plugin.TextCommand):
 
         current_content = self.view.substr(sublime.Region(0, self.view.size()))
         file_path = self.view.file_name()
-        formatted_code = format_with_prettierd(current_content, file_path)
+        formatted_code = format_with_prettierd(self.view, current_content, file_path)
         
         # print("Formatted Code:", formatted_code)
 
