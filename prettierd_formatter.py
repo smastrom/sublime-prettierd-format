@@ -29,7 +29,9 @@ def format_with_prettierd(view_or_window, content, file_path):
     cmd = [prettierd_path, "--stdin-filepath", file_path]
     
     try:
-        process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=os.path.dirname(file_path))
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=os.path.dirname(file_path), startupinfo=startupinfo)
         formatted_code, error = process.communicate(input=content.encode('utf-8'))
     except Exception as e:
         sublime.error_message("Failed to execute prettierd: " + str(e))
