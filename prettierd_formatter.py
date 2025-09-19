@@ -27,15 +27,22 @@ def format_with_prettierd(view_or_window, content, file_path):
         sublime.error_message(message)
         return None
 
-    cmd = [prettierd_path, "--stdin-filepath", file_path]
-    
+    cmd = [prettierd_path, file_path]
+
+    env = os.environ.copy()
+    # Force disable colored output.
+    # See: https://github.com/fsouza/prettierd/issues/790
+    env['NO_COLOR'] = '1'
+
     try:
         if sys.platform == 'win32':
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         else:
             startupinfo = None
-        process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=os.path.dirname(file_path), startupinfo=startupinfo)
+        process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE, cwd=os.path.dirname(file_path),
+                                   startupinfo=startupinfo, env=env)
         formatted_code, error = process.communicate(input=content.encode('utf-8'))
     except Exception as e:
         sublime.error_message("Failed to execute prettierd: " + str(e))
