@@ -44,7 +44,11 @@ def format_with_prettierd(view_or_window, content, file_path):
     if process.returncode == 0:
         return formatted_code.decode('utf-8')
     else:
-        error_message = error.decode('utf-8') if error.decode('utf-8') else "Unknown error"
+        error_message = error.decode('utf-8')
+        if not error_message:
+            error_message = formatted_code.decode('utf-8')
+        if not error_message:
+            error_message = "Unknown error"
         print(error_message)
         sublime.error_message("Error formatting the file with prettierd: " + error_message)
         return None
