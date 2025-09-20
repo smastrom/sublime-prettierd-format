@@ -2,6 +2,7 @@ import sublime
 import shutil
 import subprocess
 import os
+import sys
 
 from .utils import get_setting
 
